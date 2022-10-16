@@ -1,0 +1,195 @@
+ARM GAS  /var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 28, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"diskio.c"
+  13              		.text
+  14              		.section	.text.disk_status,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 2,,3
+  17              		.global	disk_status
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv5-d16
+  24              	disk_status:
+  25              		@ args = 0, pretend = 0, frame = 0
+  26              		@ frame_needed = 0, uses_anonymous_args = 0
+  27              		@ link register save eliminated.
+  28 0000 034B     		ldr	r3, .L3
+  29 0002 03EB8002 		add	r2, r3, r0, lsl #2
+  30 0006 1844     		add	r0, r0, r3
+  31 0008 5368     		ldr	r3, [r2, #4]
+  32 000a 007A     		ldrb	r0, [r0, #8]	@ zero_extendqisi2
+  33 000c 5B68     		ldr	r3, [r3, #4]
+  34 000e 1847     		bx	r3
+  35              	.L4:
+  36              		.align	2
+  37              	.L3:
+  38 0010 00000000 		.word	disk
+  40              		.section	.text.disk_initialize,"ax",%progbits
+  41              		.align	1
+  42              		.p2align 2,,3
+  43              		.global	disk_initialize
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  47              		.fpu fpv5-d16
+  49              	disk_initialize:
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53 0000 084B     		ldr	r3, .L10
+  54 0002 1A5C     		ldrb	r2, [r3, r0]	@ zero_extendqisi2
+  55 0004 5AB9     		cbnz	r2, .L6
+  56 0006 03EB8002 		add	r2, r3, r0, lsl #2
+  57 000a 1918     		adds	r1, r3, r0
+  58 000c 10B4     		push	{r4}
+  59 000e 0124     		movs	r4, #1
+  60 0010 5268     		ldr	r2, [r2, #4]
+ARM GAS  /var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s 			page 2
+
+
+  61 0012 1C54     		strb	r4, [r3, r0]
+  62 0014 5DF8044B 		ldr	r4, [sp], #4
+  63 0018 087A     		ldrb	r0, [r1, #8]	@ zero_extendqisi2
+  64 001a 1368     		ldr	r3, [r2]
+  65 001c 1847     		bx	r3
+  66              	.L6:
+  67 001e 0020     		movs	r0, #0
+  68 0020 7047     		bx	lr
+  69              	.L11:
+  70 0022 00BF     		.align	2
+  71              	.L10:
+  72 0024 00000000 		.word	disk
+  74              		.section	.text.disk_read,"ax",%progbits
+  75              		.align	1
+  76              		.p2align 2,,3
+  77              		.global	disk_read
+  78              		.syntax unified
+  79              		.thumb
+  80              		.thumb_func
+  81              		.fpu fpv5-d16
+  83              	disk_read:
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              		@ link register save eliminated.
+  87 0000 30B4     		push	{r4, r5}
+  88 0002 054C     		ldr	r4, .L14
+  89 0004 04EB8005 		add	r5, r4, r0, lsl #2
+  90 0008 2044     		add	r0, r0, r4
+  91 000a 6C68     		ldr	r4, [r5, #4]
+  92 000c 007A     		ldrb	r0, [r0, #8]	@ zero_extendqisi2
+  93 000e A468     		ldr	r4, [r4, #8]
+  94 0010 A446     		mov	ip, r4
+  95 0012 30BC     		pop	{r4, r5}
+  96 0014 6047     		bx	ip
+  97              	.L15:
+  98 0016 00BF     		.align	2
+  99              	.L14:
+ 100 0018 00000000 		.word	disk
+ 102              		.section	.text.disk_write,"ax",%progbits
+ 103              		.align	1
+ 104              		.p2align 2,,3
+ 105              		.global	disk_write
+ 106              		.syntax unified
+ 107              		.thumb
+ 108              		.thumb_func
+ 109              		.fpu fpv5-d16
+ 111              	disk_write:
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114              		@ link register save eliminated.
+ 115 0000 30B4     		push	{r4, r5}
+ 116 0002 054C     		ldr	r4, .L18
+ 117 0004 04EB8005 		add	r5, r4, r0, lsl #2
+ 118 0008 2044     		add	r0, r0, r4
+ 119 000a 6C68     		ldr	r4, [r5, #4]
+ 120 000c 007A     		ldrb	r0, [r0, #8]	@ zero_extendqisi2
+ 121 000e E468     		ldr	r4, [r4, #12]
+ARM GAS  /var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s 			page 3
+
+
+ 122 0010 A446     		mov	ip, r4
+ 123 0012 30BC     		pop	{r4, r5}
+ 124 0014 6047     		bx	ip
+ 125              	.L19:
+ 126 0016 00BF     		.align	2
+ 127              	.L18:
+ 128 0018 00000000 		.word	disk
+ 130              		.section	.text.disk_ioctl,"ax",%progbits
+ 131              		.align	1
+ 132              		.p2align 2,,3
+ 133              		.global	disk_ioctl
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 137              		.fpu fpv5-d16
+ 139              	disk_ioctl:
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		@ link register save eliminated.
+ 143 0000 054B     		ldr	r3, .L22
+ 144 0002 10B4     		push	{r4}
+ 145 0004 03EB8004 		add	r4, r3, r0, lsl #2
+ 146 0008 1844     		add	r0, r0, r3
+ 147 000a 6368     		ldr	r3, [r4, #4]
+ 148 000c 007A     		ldrb	r0, [r0, #8]	@ zero_extendqisi2
+ 149 000e 1B69     		ldr	r3, [r3, #16]
+ 150 0010 5DF8044B 		ldr	r4, [sp], #4
+ 151 0014 1847     		bx	r3
+ 152              	.L23:
+ 153 0016 00BF     		.align	2
+ 154              	.L22:
+ 155 0018 00000000 		.word	disk
+ 157              		.section	.text.get_fattime,"ax",%progbits
+ 158              		.align	1
+ 159              		.p2align 2,,3
+ 160              		.weak	get_fattime
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 164              		.fpu fpv5-d16
+ 166              	get_fattime:
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+ 170 0000 0020     		movs	r0, #0
+ 171 0002 7047     		bx	lr
+ 173              		.ident	"GCC: (GNU Arm Embedded Toolchain 9-2020-q2-update) 9.3.1 20200408 (release)"
+ARM GAS  /var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 diskio.c
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:15     .text.disk_status:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:24     .text.disk_status:0000000000000000 disk_status
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:38     .text.disk_status:0000000000000010 $d
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:41     .text.disk_initialize:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:49     .text.disk_initialize:0000000000000000 disk_initialize
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:72     .text.disk_initialize:0000000000000024 $d
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:75     .text.disk_read:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:83     .text.disk_read:0000000000000000 disk_read
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:100    .text.disk_read:0000000000000018 $d
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:103    .text.disk_write:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:111    .text.disk_write:0000000000000000 disk_write
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:128    .text.disk_write:0000000000000018 $d
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:131    .text.disk_ioctl:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:139    .text.disk_ioctl:0000000000000000 disk_ioctl
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:155    .text.disk_ioctl:0000000000000018 $d
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:158    .text.get_fattime:0000000000000000 $t
+/var/folders/lg/77ksxqjx0n7gwph6nqpzcmcw0000gn/T//ccj1biPt.s:166    .text.get_fattime:0000000000000000 get_fattime
+
+UNDEFINED SYMBOLS
+disk
