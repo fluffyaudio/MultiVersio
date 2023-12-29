@@ -1,0 +1,8 @@
+# ignore .git dir
+.git
+
+# Ignore git submodule deps
+./DaisySP/*
+./libDaisy/*
+./stmlib/*
+
