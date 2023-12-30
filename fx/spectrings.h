@@ -15,8 +15,9 @@ class Spectrings : public IEffect
 public:
     Spectrings(IMultiVersioCommon &mv, Spectra &spectra, int sample_rate);
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
-    void getSample(float &outl, float &outr, float inl, float inr);
+    void processSample(float &outl, float &outr, float inl, float inr);
     bool usesReverb();
+    void preProcess(const float *in1, const float *in2, size_t size);
 
     int spectrings_num_models;
     int spectrings_active_voices;

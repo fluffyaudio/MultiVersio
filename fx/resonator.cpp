@@ -86,7 +86,7 @@ void Resonator::SelectResonatorOctave(float knob_value_1)
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void Resonator::getSample(float &outl, float &outr, float inl, float inr)
+void Resonator::processSample(float &outl, float &outr, float inl, float inr)
 {
     float resonator_target = this->mv.global_sample_rate / daisysp::mtof(resonator_note);
 
@@ -121,7 +121,7 @@ void Resonator::getSample(float &outl, float &outr, float inl, float inr)
     float resonator_outr = this->mv.svfr.Low();
 
     float rev_outl, rev_outr;
-    this->mv.effects[REV]->getSample(rev_outl, rev_outr, (inl * 0.01 + resonator_previous_l * 0.7f) * resonator_drywet + (inl * 0.999 + resonator_previous_l * 0.001f) * (1 - resonator_drywet),
+    this->mv.effects[REV]->processSample(rev_outl, rev_outr, (inl * 0.01 + resonator_previous_l * 0.7f) * resonator_drywet + (inl * 0.999 + resonator_previous_l * 0.001f) * (1 - resonator_drywet),
                                      (inr * 0.01 + resonator_previous_r * 0.7f) * resonator_drywet + (inr * 0.999 + resonator_previous_r * 0.001f) * (1 - resonator_drywet));
 
     resonator_averager.Add((resonator_outl * resonator_outl + resonator_outr * resonator_outr) / 2);

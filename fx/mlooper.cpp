@@ -261,7 +261,7 @@ float MLooper::GetSampleFromBuffer(float buffer[], float pos)
  * @param in1l The left input sample.
  * @param in1r The right input sample.
  */
-void MLooper::getSample(float &out1l, float &out1r, float in1l, float in1r)
+void MLooper::processSample(float &out1l, float &out1r, float in1l, float in1r)
 { // writing the incoming input into the buffer
     out1l = out1r = 0;
     WriteLooperBuffer(in1l, in1r);

@@ -42,7 +42,7 @@ Lofi::Lofi(IMultiVersioCommon &mv) : mv(mv)
  * @param inl The left channel input sample.
  * @param inr The right channel input sample.
  */
-void Lofi::getSample(float &outl, float &outr, float inl, float inr)
+void Lofi::processSample(float &outl, float &outr, float inl, float inr)
 {
     inl = inl * 0.8f;
     inr = inr * 0.8f;

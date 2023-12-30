@@ -38,7 +38,7 @@ Spectrings::Spectrings(IMultiVersioCommon &mv, Spectra &spectra, int sample_rate
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void Spectrings::getSample(float &outl, float &outr, float inl, float inr)
+void Spectrings::processSample(float &outl, float &outr, float inl, float inr)
 {
     spectra.spectra_oscbank.updateFreqAndMagn();
     float rings_1 = string_voice[0].Process() * (spectrings_accent_amount[0] * this->mv.attack_lut[spectrings_attack_step[0]] + (1 - spectrings_accent_amount[0]));
@@ -210,4 +210,20 @@ void Spectrings::run(float blend, float regen, float tone, float speed, float si
 bool Spectrings::usesReverb()
 {
     return true;
+}
+
+/**
+ * @brief Runs pre-processing on the Spectrings effect.
+ *
+ * Sets the frequency of the string voice.
+ * Input samples and size are not used.
+ * Overrides the IEffect::preProcess method.
+ *
+ * @param in1 The left input sample.
+ * @param in2 The right input sample.
+ * @param size The size of the input.
+ */
+void Spectrings::preProcess(const float *in1, const float *in2, size_t size)
+{
+    string_voice[spectrings_current_voice].SetFreq(spectra.spectra_oscbank.getFrequency(spectrings_current_voice));
 }

@@ -16,7 +16,7 @@ public:
     void WriteShimmerBuffer1(float in_l, float in_r);
     void WriteShimmerBuffer2(float in_l, float in_r);
     float CompressSample(float sample);
-    void getSample(float &outl, float &outr, float inl, float inr);
+    void processSample(float &outl, float &outr, float inl, float inr);
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
     bool usesReverb();
 

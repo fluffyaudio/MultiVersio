@@ -102,7 +102,7 @@ float Reverb::CompressSample(float sample)
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void Reverb::getSample(float &outl, float &outr, float inl, float inr)
+void Reverb::processSample(float &outl, float &outr, float inl, float inr)
 {
     float shimmer_l = 0.0f;
     float shimmer_r = 0.0f;

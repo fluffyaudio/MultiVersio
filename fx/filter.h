@@ -20,10 +20,9 @@ public:
     float filter_current_l_freq;
     float filter_current_r_freq;
 
-    void getSample(float &outl, float &outr, float inl, float inr);
-    void getSamples(float outl[], float outr[], const float inl[], const float inr[], size_t size);
+    void processSample(float &outl, float &outr, float inl, float inr);
+    void postProcess(float outl[], float outr[], const float inl[], const float inr[], size_t size);
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
-    bool usesReverb();
 
 private:
     daisy::Parameter filter_cutoff_l_par;

@@ -24,12 +24,12 @@ Filter::Filter(IMultiVersioCommon &mv) : mv(mv)
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void Filter::getSample(float &outl, float &outr, float inl, float inr)
+void Filter::processSample(float &outl, float &outr, float inl, float inr)
 {
 }
 
 /**
- * @brief Gets the next samples from the filter effect.
+ * @brief Postprocesses the input and output buffers.
  *
  * @param outl The left output sample.
  * @param outr The right output sample.
@@ -37,7 +37,7 @@ void Filter::getSample(float &outl, float &outr, float inl, float inr)
  * @param inr The right input sample.
  * @param size The size of the input and output buffers.
  */
-void Filter::getSamples(float outl[], float outr[], const float inl[], const float inr[], size_t size)
+void Filter::postProcess(float outl[], float outr[], const float inl[], const float inr[], size_t size)
 {
     this->mv.svf2l.ProcessMultimode(inl, outl, size, filter_mode_l);
     // TODO why does this manipulate the input buffer on the right channel only?

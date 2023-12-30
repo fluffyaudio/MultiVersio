@@ -48,7 +48,7 @@ void DelayEffect::SelectDelayDivision(float knob1, float knob2)
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void DelayEffect::getSample(float &outl, float &outr, float inl, float inr){
+void DelayEffect::processSample(float &outl, float &outr, float inl, float inr){
     // TODO
 };
 

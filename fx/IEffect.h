@@ -31,7 +31,7 @@ public:
      * @param inl The left input sample.
      * @param inr The right input sample.
      */
-    virtual void getSample(float &outl, float &outr, float inl, float inr) = 0;
+    virtual void processSample(float &outl, float &outr, float inl, float inr) = 0;
 
     /**
      * @brief Indicates whether the effect uses reverb.
@@ -45,5 +45,37 @@ public:
     bool usesReverb()
     {
         return false;
+    }
+
+    /**
+     * @brief Processes the input samples before the effect is run.
+     *
+     * This method is called before the effect is run. It can be used to process the input samples before the effect is run.
+     *
+     * The base implementation does nothing.
+     *
+     * @param in1 The left input sample.
+     * @param in2 The right input sample.
+     * @param size The number of samples.
+     */
+    void preProcess(const float *in1, const float *in2, size_t size)
+    {
+    }
+
+    /**
+     * @brief Processes the output samples after the effect is run.
+     *
+     * This method is called after the effect is run. It can be used to process the output samples after the effect is run.
+     *
+     * The base implementation does nothing.
+     *
+     * @param outl The left output samples
+     * @param outr The right output samples
+     * @param inl The left input samples
+     * @param inr The right input samples
+     * @param size The number of samples.
+     */
+    void postProcess(float outl[], float outr[], const float inl[], const float inr[], size_t size)
+    {
     }
 };

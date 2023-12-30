@@ -75,25 +75,11 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
     instance->Controls();
     instance->leds.UpdateLeds();
 
-    Filter *filter = (Filter *)instance->effects[FILTER];
-    Spectra *spectra = (Spectra *)instance->effects[SPECTRA];
-    Spectrings *spectrings = (Spectrings *)instance->effects[SPECTRINGS];
+    IEffect *effect = instance->effects[instance->mode];
 
-    if ((instance->mode == SPECTRA) or (instance->mode == SPECTRINGS))
-    {
-        spectra->spectra_oscbank.FillInputBuffer(in[0], in[1], size);
-
-        if (spectra->spectra_do_analysis)
-        {
-            spectra->spectra_do_analysis = false;
-            spectra->spectra_oscbank.CalculateSpectralanalysis();
-        }
-
-        if (instance->mode == SPECTRINGS)
-        {
-            spectrings->string_voice[spectrings->spectrings_current_voice].SetFreq(spectra->spectra_oscbank.getFrequency(spectrings->spectrings_current_voice));
-        }
-    };
+    // run pre-processing on the current effect
+    // NOTE: the default preProcess implementation does nothing
+    effect->preProcess(in[0], in[1], size);
 
     // audio
     for (size_t i = 0; i < size; i += 1)
@@ -105,22 +91,20 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
         out2 = 0.f;
 
         // run effect
-        instance->effects[instance->mode]->getSample(out1, out2, in1, in2);
+        effect->processSample(out1, out2, in1, in2);
 
         // apply reverb for those effects that use it
-        if (instance->effects[instance->mode]->usesReverb())
+        if (effect->usesReverb())
         {
-            instance->effects[REV]->getSample(out1, out2, out1, out2);
+            instance->effects[REV]->processSample(out1, out2, out1, out2);
         }
 
         out[0][i] = out1;
         out[1][i] = out2;
     }
 
-    if (instance->mode == FILTER)
-    {
-        filter->getSamples(out[0], out[1], in[0], in[1], size);
-    }
+    // runs postprocessing. This is a noop for all effects apart from the filter.
+    effect->postProcess(out[0], out[1], in[0], in[1], size);
 };
 
 /**

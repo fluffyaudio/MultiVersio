@@ -96,7 +96,7 @@ void Spectra::SelectSpectraQuality(float knob_value_1)
  * @param inl The left input sample.
  * @param inr The right input sample.
  */
-void Spectra::getSample(float &outl, float &outr, float inl, float inr)
+void Spectra::processSample(float &outl, float &outr, float inl, float inr)
 {
     float spectra_outl;
     float spectra_outr;
@@ -240,4 +240,26 @@ void Spectra::run(float blend, float regen, float tone, float speed, float size,
 bool Spectra::usesReverb()
 {
     return true;
+}
+
+/**
+ * @brief Fills the oscillator bank input buffer with the given samples.
+ *
+ * If the spectra_do_analysis flag is set, spectral analysis is performed.
+ *
+ * Overrides the IEffect::preProcess method.
+ *
+ * @param in1 The left input sample.
+ * @param in2 The right input sample.
+ * @param size The size of the input buffer.
+ */
+void Spectra::preProcess(const float *in1, const float *in2, size_t size)
+{
+    spectra_oscbank.FillInputBuffer(in1, in2, size);
+
+    if (spectra_do_analysis)
+    {
+        spectra_do_analysis = false;
+        spectra_oscbank.CalculateSpectralanalysis();
+    }
 }

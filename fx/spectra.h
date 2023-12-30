@@ -28,8 +28,9 @@ public:
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
     void SelectSpectraOctave(float knob_value_1);
     void SelectSpectraQuality(float knob_value_1);
-    void getSample(float &outl, float &outr, float inl, float inr);
+    void processSample(float &outl, float &outr, float inl, float inr);
     bool usesReverb();
+    void preProcess(const float *in1, const float *in2, size_t size);
 
     int spectra_waveform = 0;
     float spectra_r, spectra_g, spectra_b = 0.f;
