@@ -68,3 +68,13 @@ void DelayEffect::getSample(float &outl, float &outr, float inl, float inr){
 void DelayEffect::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU){
     // TODO
 };
+
+/**
+ * @brief Indicates whether the delay effect uses reverb.
+ *
+ * @return True, as the delay effect uses reverb
+ */
+bool DelayEffect::usesReverb()
+{
+    return true;
+}

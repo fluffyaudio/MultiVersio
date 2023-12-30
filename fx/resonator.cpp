@@ -192,3 +192,13 @@ void Resonator::run(float blend, float regen, float tone, float speed, float siz
 
     resonator_drywet = blend * 1.01;
 }
+
+/**
+ * @brief Returns whether or not the Resonator effect uses reverb.
+ *
+ * @return true
+ */
+bool Resonator::usesReverb()
+{
+    return true;
+}

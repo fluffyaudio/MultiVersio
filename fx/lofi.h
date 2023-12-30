@@ -17,6 +17,7 @@ public:
 
     void getSample(float &outl, float &outr, float inl, float inr);
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    bool usesReverb();
 
 private:
     float lofi_current_RMS, lofi_target_RMS;

@@ -231,3 +231,13 @@ void Spectra::run(float blend, float regen, float tone, float speed, float size,
 
     spectra_reverb_amount = this->mv.reverb_drywet;
 }
+
+/**
+ * @brief Returns whether or not the Spectra effect uses reverb.
+ *
+ * @return true
+ */
+bool Spectra::usesReverb()
+{
+    return true;
+}

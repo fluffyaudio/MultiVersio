@@ -219,3 +219,13 @@ void Lofi::run(float blend, float regen, float tone, float speed, float size, fl
     // DRY WET
     this->mv.reverb_drywet = regen * 0.8f;
 }
+
+/**
+ * Indicates whether the lo-fi effect uses reverb.
+ *
+ * @return true  as the lo-fi effect uses reverb.
+ */
+bool Lofi::usesReverb()
+{
+    return true;
+}

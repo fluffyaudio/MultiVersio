@@ -29,6 +29,7 @@ public:
     void SelectSpectraOctave(float knob_value_1);
     void SelectSpectraQuality(float knob_value_1);
     void getSample(float &outl, float &outr, float inl, float inr);
+    bool usesReverb();
 
     int spectra_waveform = 0;
     float spectra_r, spectra_g, spectra_b = 0.f;

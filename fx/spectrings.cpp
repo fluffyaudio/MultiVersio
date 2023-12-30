@@ -201,3 +201,13 @@ void Spectrings::run(float blend, float regen, float tone, float speed, float si
 
     this->mv.reverb_drywet = clamp(map(clamp(speed * 1.1f, 0.0f, 1.0f) * 0.95, 0.0, 0.95, 0.7f, 0.95f), 0.0f, 0.95f);
 }
+
+/**
+ * @brief Returns whether or not the Spectrings effect uses reverb.
+ *
+ * @return true
+ */
+bool Spectrings::usesReverb()
+{
+    return true;
+}

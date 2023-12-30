@@ -32,4 +32,18 @@ public:
      * @param inr The right input sample.
      */
     virtual void getSample(float &outl, float &outr, float inl, float inr) = 0;
+
+    /**
+     * @brief Indicates whether the effect uses reverb.
+     *
+     * Some effects also use the reverb effect. This method indicates whether the effect uses reverb or not.
+     *
+     * The base implementation returns false.
+     *
+     * @return True if the effect uses reverb, false otherwise.
+     */
+    bool usesReverb()
+    {
+        return false;
+    }
 };

@@ -13,6 +13,7 @@ public:
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
     void getSample(float &outl, float &outr, float inl, float inr);
     void SelectResonatorOctave(float speed);
+    bool usesReverb();
 
     float resonator_feedback;
     float resonator_target;

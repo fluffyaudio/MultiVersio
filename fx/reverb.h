@@ -18,6 +18,7 @@ public:
     float CompressSample(float sample);
     void getSample(float &outl, float &outr, float inl, float inr);
     void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    bool usesReverb();
 
     float reverb_drywet, reverb_feedback, reverb_lowpass, reverb_shimmer;
     int reverb_shimmer_write_pos1l, reverb_shimmer_write_pos1r, reverb_shimmer_write_pos2;

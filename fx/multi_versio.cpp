@@ -107,8 +107,8 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
         // run effect
         instance->effects[instance->mode]->getSample(out1, out2, in1, in2);
 
-        // run reverb for those effects that use it
-        if (instance->mode == LOFI || instance->mode == SPECTRA || instance->mode == SPECTRINGS)
+        // apply reverb for those effects that use it
+        if (instance->effects[instance->mode]->usesReverb())
         {
             instance->effects[REV]->getSample(out1, out2, out1, out2);
         }
