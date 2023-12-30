@@ -82,6 +82,7 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
     if ((instance->mode == SPECTRA) or (instance->mode == SPECTRINGS))
     {
         spectra->spectra_oscbank.FillInputBuffer(in[0], in[1], size);
+
         if (spectra->spectra_do_analysis)
         {
             spectra->spectra_do_analysis = false;
@@ -103,36 +104,15 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
         out1 = 0.f;
         out2 = 0.f;
 
-        switch (instance->mode)
-        {
-        case REV:
-            instance->effects[REV]->getSample(out1, out2, in1, in2);
-            break;
-        case RESONATOR:
-            instance->effects[RESONATOR]->getSample(out1, out2, in1, in2);
-            break;
-        case LOFI:
-            instance->effects[REV]->getSample(out1, out2, in1, in2);
-            instance->effects[LOFI]->getSample(out1, out2, out1, out2);
-            break;
-        case MLOOPER:
-            instance->effects[MLOOPER]->getSample(out1, out2, in1, in2);
-            break;
-        case SPECTRA:
-            instance->effects[SPECTRA]->getSample(out1, out2, in1, in2);
-            instance->effects[REV]->getSample(out1, out2, out1, out2);
-            break;
-        case DELAY:
-            instance->effects[DELAY]->getSample(out1, out2, in1, in2);
-            break;
-        case SPECTRINGS:
-            instance->effects[SPECTRINGS]->getSample(out1, out2, in1, in2);
-            instance->effects[REV]->getSample(out1, out2, out1, out2);
-            break;
+        // run effect
+        instance->effects[instance->mode]->getSample(out1, out2, in1, in2);
 
-        default:
-            out1 = out2 = 0.f;
+        // run reverb for those effects that use it
+        if (instance->mode == LOFI || instance->mode == SPECTRA || instance->mode == SPECTRINGS)
+        {
+            instance->effects[REV]->getSample(out1, out2, out1, out2);
         }
+
         out[0][i] = out1;
         out[1][i] = out2;
     }
@@ -218,7 +198,7 @@ void MultiVersio::initialize_fx()
 /**
  * Run method.
  *
- * This method does not do anything.
+ * This method does not do anything.  It probably should do something.
  */
 void MultiVersio::run()
 {
@@ -234,44 +214,54 @@ void MultiVersio::run()
  * Returns the current mode that the MultiVersio is in, according
  * to the position of the switches.
  *
+ * If the mode has changed, the LEDs are reset.
+ *
+ * The mode is calculated as follows:
+ *
+ * - 0: SW1 = 0, SW2 = 0
+ * - 1: SW1 = 1, SW2 = 0
+ * - 2: SW1 = 2, SW2 = 0
+ * - 3: SW1 = 0, SW2 = 1
+ * - 4: SW1 = 1, SW2 = 1
+ * - 5: SW1 = 2, SW2 = 1
+ * - 6: SW1 = 0, SW2 = 2
+ * - 7: SW1 = 1, SW2 = 2
+ * - 8: SW1 = 2, SW2 = 2
+ *
+ * @see DaisyVersio::SW_0
+ * @see DaisyVersio::SW_1
+ *
  * @return int The current mode.
  */
 int MultiVersio::getMode()
 {
-    int sw1, sw2;
+    int sw1 = this->versio.sw[daisy::DaisyVersio::SW_0].Read();
+    int sw2 = this->versio.sw[daisy::DaisyVersio::SW_1].Read();
 
-    switch (this->versio.sw[daisy::DaisyVersio::SW_0].Read())
+    this->mode = sw1 + (3 * sw2);
+
+    if (mode != previous_mode)
     {
-    case 0:
-        sw1 = 1;
-        break;
-    case 1:
-        sw1 = 0;
-        break;
-    case 2:
-        sw1 = 2;
-        break;
-    };
-
-    switch (this->versio.sw[daisy::DaisyVersio::SW_1].Read())
-    {
-    case 0:
-        sw2 = 3;
-        break;
-    case 1:
-        sw2 = 0;
-        break;
-    case 2:
-        sw2 = 6;
-        break;
-    };
-
-    this->mode = sw1 + sw2;
+        previous_mode = mode;
+        this->leds.Reset();
+    }
 
     return mode;
 }
 
-void MultiVersio::UpdateKnobs()
+/**
+ * @brief Runs the active effect.
+ *
+ * This function gets the value of all knobs, gets the current mode,
+ * and runs the active effect.
+ *
+ * @see MultiVersio::getMode()
+ * @see MultiVersio::effects
+ * @todo Wire in the value of FSU, which is required by some effects.
+ *
+ * @return void
+ */
+void MultiVersio::runActiveEffect()
 {
     float blend = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_0);
     float speed = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_1);
@@ -283,29 +273,24 @@ void MultiVersio::UpdateKnobs()
 
     mode = this->getMode();
 
-    if (mode != previous_mode)
-    {
-        previous_mode = mode;
-        this->leds.Reset();
-    }
-
     effects[mode]->run(blend, regen, tone, speed, size, index, dense, 0); // TODO: FSU
-
-    this->versio.tap.Debounce();
 }
 
 void MultiVersio::Controls()
 {
+    // TODO why are these variables set here?
     Resonator *resonator = (Resonator *)effects[RESONATOR];
     Reverb *reverb = (Reverb *)effects[REV];
-
     resonator->resonator_feedback = 0;
     reverb->reverb_drywet = 0;
 
     this->versio.ProcessAnalogControls();
-    // patch.ProcessDigitalControls();
 
-    this->UpdateKnobs();
+    // this->versio.ProcessDigitalControls();
+
+    this->versio.tap.Debounce();
+
+    this->runActiveEffect();
 
     // UpdateEncoder();
 }

@@ -1,8 +1,19 @@
+/**
+ * @brief Implementation of the Resonator class.
+ *
+ * The Resonator class is responsible for generating resonator effects based on the input audio signals.
+ * It provides methods for selecting the resonator octave, processing audio samples, and adjusting parameters.
+ */
 #include "../core/helpers.h"
 #include "resonator.h"
 #include "IMultiVersioCommon.h"
 #include "mode.h"
 
+/**
+ * @brief Construct a new Resonator::Resonator object
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
 Resonator::Resonator(IMultiVersioCommon &mv) : mv(mv)
 {
     // Initialize resonator parameters
@@ -26,6 +37,18 @@ Resonator::Resonator(IMultiVersioCommon &mv) : mv(mv)
     resonator_glide_mode = 0;
 }
 
+/**
+ * @brief Selects the resonator octave based on the given knob value.
+ *
+ * The resonator octave is determined as follows:
+ * - If the knob value is less than 0.2, the resonator octave is set to 1.
+ * - If the knob value is between 0.2 and 0.4, the resonator octave is set to 2.
+ * - If the knob value is between 0.4 and 0.6, the resonator octave is set to 4.
+ * - If the knob value is between 0.6 and 0.8, the resonator octave is set to 8.
+ * - If the knob value is greater than 0.8, the resonator octave is set to 16.
+ *
+ * @param knob_value_1 The value of the knob used to select the resonator octave.
+ */
 void Resonator::SelectResonatorOctave(float knob_value_1)
 {
     if (knob_value_1 < 0.2f)
@@ -50,6 +73,19 @@ void Resonator::SelectResonatorOctave(float knob_value_1)
     }
 }
 
+/**
+ * @brief Calculates the output samples for the Resonator effect.
+ *
+ * This function takes the input samples and calculates the output samples
+ * based on the current state of the Resonator effect. It applies various
+ * processing steps such as delay, filtering, and feedback to create the
+ * resonator effect.
+ *
+ * @param[out] outl The left output sample.
+ * @param[out] outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ */
 void Resonator::getSample(float &outl, float &outr, float inl, float inr)
 {
     float resonator_target = this->mv.global_sample_rate / daisysp::mtof(resonator_note);
@@ -105,6 +141,18 @@ void Resonator::getSample(float &outl, float &outr, float inl, float inr)
     }
 }
 
+/**
+ * @brief Runs the resonator effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void Resonator::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     if (this->mv.versio.tap.RisingEdge())

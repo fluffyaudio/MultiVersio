@@ -2,16 +2,41 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
-Filter::Filter(IMultiVersioCommon &mv) : mv(mv)
+/**
+ * @brief Construct a new Filter::Filter object
+ *
+ * Initializes the filter cutoff frequency parameters.
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
+s Filter::Filter(IMultiVersioCommon &mv) : mv(mv)
 {
     filter_cutoff_l_par.Init(this->mv.versio.knobs[daisy::DaisyVersio::KNOB_0], 60, 20000, filter_cutoff_l_par.LOGARITHMIC);
     filter_cutoff_r_par.Init(this->mv.versio.knobs[daisy::DaisyVersio::KNOB_4], 60, 20000, filter_cutoff_r_par.LOGARITHMIC);
 }
 
+/**
+ * @brief Gets the next sample from the filter effect.
+ *
+ * @todo This method is not implemented
+ * @param outl The left output sample.
+ * @param outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ */
 void Filter::getSample(float &outl, float &outr, float inl, float inr)
 {
 }
 
+/**
+ * @brief Gets the next samples from the filter effect.
+ *
+ * @param outl The left output sample.
+ * @param outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ * @param size The size of the input and output buffers.
+ */
 void Filter::getSamples(float outl[], float outr[], const float inl[], const float inr[], size_t size)
 {
     this->mv.svf2l.ProcessMultimode(inl, outl, size, filter_mode_l);
@@ -24,6 +49,18 @@ void Filter::getSamples(float outl[], float outr[], const float inl[], const flo
     this->mv.svf2r.ProcessMultimode(inr, outr, size, filter_mode_r);
 }
 
+/**
+ * @brief Runs the filter effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void Filter::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     // Calculate filter frequencies

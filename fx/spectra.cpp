@@ -3,10 +3,29 @@
 #include "spectra.h"
 #include "OscBank.h"
 
+/**
+ * @brief Construct a new Spectra::Spectra object
+ *
+ * Initializes the oscilattor bank.
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
 Spectra::Spectra(IMultiVersioCommon &mv) : mv(mv), spectra_oscbank(mv, *this)
 {
 }
 
+/**
+ * @brief Selects the spectra octave based on the given knob value.
+ *
+ * The spectra octave is determined as follows:
+ * - If the knob value is less than 0.2, the spectra octave is set to -2.
+ * - If the knob value is between 0.2 and 0.4, the spectra octave is set to -1.
+ * - If the knob value is between 0.4 and 0.6, the spectra octave is set to 0.
+ * - If the knob value is between 0.6 and 0.8, the spectra octave is set to 1.
+ * - If the knob value is greater than 0.8, the spectra octave is set to 2.
+ *
+ * @param knob_value_1 The value of the knob used to select the spectra octave.
+ */
 void Spectra::SelectSpectraOctave(float knob_value_1)
 {
     // sets the octave shift
@@ -37,6 +56,17 @@ void Spectra::SelectSpectraOctave(float knob_value_1)
     }
 };
 
+/**
+ * @brief Selects the spectra quality based on the given knob value.
+ *
+ * The spectra quality is determined as follows:
+ * - If the knob value is less than 0.25, the spectra quality is set to 2.
+ * - If the knob value is between 0.25 and 0.5, the spectra quality is set to 4.
+ * - If the knob value is between 0.5 and 0.75, the spectra quality is set to 8.
+ * - If the knob value is greater than 0.75, the spectra quality is set to 16.
+ *
+ * @param knob_value_1 The value of the knob used to select the spectra quality.
+ */
 void Spectra::SelectSpectraQuality(float knob_value_1)
 {
     // sets the octave shift
@@ -58,6 +88,14 @@ void Spectra::SelectSpectraQuality(float knob_value_1)
     }
 };
 
+/**
+ * @brief Processes the input samples and writes the output samples.
+ *
+ * @param outl The left output sample.
+ * @param outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ */
 void Spectra::getSample(float &outl, float &outr, float inl, float inr)
 {
     float spectra_outl;
@@ -79,6 +117,18 @@ void Spectra::getSample(float &outl, float &outr, float inl, float inr)
     outr = (sqrt(0.5f * (spectra_drywet * 2.0f)) * spectra_outr + sqrt(0.95f * (2.f - (spectra_drywet * 2))) * inr) * 0.5f;
 }
 
+/**
+ * @brief Runs the spectra effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void Spectra::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     // blend = spectra drywet

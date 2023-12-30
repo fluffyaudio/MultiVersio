@@ -1,9 +1,23 @@
+/**
+ * @file OscBank.cpp
+ * @brief Implementation of the OscBank class.
+ *
+ * The OscBank class represents a bank of oscillators used for spectral analysis and synthesis.
+ * It provides methods for initializing the oscillators, setting their frequency and amplitude,
+ * selecting waveforms, processing the oscillators, and performing spectral analysis.
+ */
 #include "daisy_versio.h"
 #include "daisysp.h"
 #include "IMultiVersioCommon.h"
 #include "ISpectra.h"
 #include "OscBank.h"
 
+/**
+ * @brief Initializes the OscBank.
+ *
+ * @param mv The IMultiVersioCommon object.
+ * @param spectra The ISpectra object.
+ */
 OscBank::OscBank(IMultiVersioCommon &mv, ISpectra &spectra) : mv(mv), spectra(spectra)
 {
     this->num_active = spectra.spectra_num_active;
@@ -14,6 +28,11 @@ OscBank::OscBank(IMultiVersioCommon &mv, ISpectra &spectra) : mv(mv), spectra(sp
     }
 };
 
+/**
+ * @brief Initializes the oscillators.
+ *
+ * @param sample_rate The sample rate.
+ */
 void OscBank::Init(float sample_rate)
 {
     for (int i = 0; i < number_of_osc; i++)
@@ -44,14 +63,34 @@ void OscBank::Init(float sample_rate)
     bandSize = sample_rate / (FFT_LENGTH * hop);
 };
 
+/**
+ * @brief Sets the frequency of an oscillator.
+ *
+ * @param index The index of the oscillator.
+ * @param frequency The frequency of the oscillator.
+ */
 void OscBank::SetFreq(int index, float frequency)
 {
     osc[index].SetFreq(frequency);
 };
+
+/**
+ * @brief Sets the amplitude of an oscillator.
+ *
+ * @param index The index of the oscillator.
+ * @param amplitude The amplitude of the oscillator.
+ */
 void OscBank::SetAmp(int index, float amplitude)
 {
     osc[index].SetAmp(amplitude);
 };
+
+/**
+ * @brief Sets the waveform of all oscillators
+ *
+ * @param index The index of the oscillator.
+ * @param waveform The waveform of the oscillator.
+ */
 float OscBank::SetAllWaveforms(int waveform)
 {
     current_wave = 0;
@@ -141,10 +180,23 @@ float OscBank::Process()
     };
     return output;
 }
+
+/**
+ * @brief Gets the number of passes of the FFT
+ * @return size_t
+ */
 size_t OscBank::GetPasses()
 {
     return num_of_passes;
 }
+
+/**
+ * @brief Fills the input buffer with the input samples.
+ *
+ * @param in1 The first input buffer.
+ * @param in2 The second input buffer.
+ * @param size The size of the input buffers.
+ */
 void OscBank::FillInputBuffer(const float *in1, const float *in2, size_t size)
 {
     bandSize = this->mv.global_sample_rate / (FFT_LENGTH * hop);
@@ -181,6 +233,11 @@ void OscBank::FillInputBuffer(const float *in1, const float *in2, size_t size)
     this->fft.Direct(window_fftinbuff, fftoutbuff);
 }
 
+/**
+ * @brief Calculates the spectral analysis.
+ *
+ * This function calculates the spectral analysis of the input buffer.
+ */
 void OscBank::CalculateSpectralanalysis()
 {
 
@@ -226,6 +283,13 @@ void OscBank::CalculateSpectralanalysis()
 
     // rightRotate(magn,spectra_rotate_harmonics, num_active);
 }
+
+/**
+ * @brief Removes the nearest bands.
+ *
+ * @param frequency The frequency.
+ * @param start_band The start band.
+ */
 void OscBank::RemoveNearestBands(float frequency, size_t start_band)
 {
     magni_fftoutbuff[start_band] = 0.f;
@@ -237,15 +301,37 @@ void OscBank::RemoveNearestBands(float frequency, size_t start_band)
         magni_fftoutbuff[-i] = magni_fftoutbuff[-i] * mult;
     }
 }
+
+/**
+ * @brief Gets the frequency of an oscillator.
+ *
+ * @param value The index of the oscillator.
+ * @return float
+ */
 float OscBank::getFrequency(int value)
 {
     return current_freq[value];
 }
+
+/**
+ * @brief Gets the magnitude of an oscillator.
+ *
+ * @param value The index of the oscillator.
+ * @return float
+ */
 float OscBank::getMagnitudo(int value)
 {
     return current_magn[value];
 }
 
+/**
+ * @brief Updates the frequency and magnitude of the oscillators.
+ *
+ * This function updates the frequency and magnitude of the oscillators.
+ * It is used to avoid clicks when changing the frequency and magnitude of the oscillators.
+ *
+ * @return void
+ */
 void OscBank::updateFreqAndMagn()
 {
     for (int i = 0; i < spectra_max_num_frequencies; i++)
@@ -260,6 +346,14 @@ void OscBank::updateFreqAndMagn()
     }
 }
 
+/**
+ * @brief Calculates the suggested hop.
+ *
+ * This function calculates the suggested hop.
+ * It is used to avoid clicks when changing the frequency and magnitude of the oscillators.
+ *
+ * @return void
+ */
 void OscBank::calculatedSuggestedHop()
 {
 
@@ -273,6 +367,13 @@ void OscBank::calculatedSuggestedHop()
     //    hop = 4;
     //}
 }
+
+/**
+ * @brief Sets the number of active oscillators.
+ *
+ * @param value The number of active oscillators.
+ * @return void
+ */
 void OscBank::SetNumActive(int value)
 {
     num_active = value;

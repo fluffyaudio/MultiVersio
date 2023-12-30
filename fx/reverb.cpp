@@ -5,6 +5,11 @@
 #include "mode.h"
 #include "daisysp.h"
 
+/**
+ * @brief Construct a new Reverb::Reverb object
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
 Reverb::Reverb(IMultiVersioCommon &mv) : mv(mv)
 {
     this->mv.rev.SetLpFreq(9000.0f);
@@ -34,7 +39,12 @@ Reverb::Reverb(IMultiVersioCommon &mv) : mv(mv)
     reverb_target_compression = 1.0f;
 }
 
-// Function to write to shimmer buffer 1
+/**
+ * @brief Writes the input samples to the first shimmer buffer.
+ *
+ * @param in_l The left channel input sample.
+ * @param in_r The right channel input sample.
+ */
 void Reverb::WriteShimmerBuffer1(float in_l, float in_r)
 {
     IMultiVersioCommon::mlooper_buf_1l[reverb_shimmer_write_pos1l] = in_l;
@@ -43,7 +53,12 @@ void Reverb::WriteShimmerBuffer1(float in_l, float in_r)
     reverb_shimmer_write_pos1r = (reverb_shimmer_write_pos1r + 1) % reverb_shimmer_buffer_size1r;
 }
 
-// Function to write to shimmer buffer 2
+/**
+ * @brief Writes the input samples to the second shimmer buffer.
+ *
+ * @param in_l The left channel input sample.
+ * @param in_r The right channel input sample.
+ */
 void Reverb::WriteShimmerBuffer2(float in_l, float in_r)
 {
     // TODO why is only the left channel being written to?
@@ -51,7 +66,12 @@ void Reverb::WriteShimmerBuffer2(float in_l, float in_r)
     reverb_shimmer_write_pos2 = (reverb_shimmer_write_pos2 + 1) % reverb_shimmer_buffer_size2;
 }
 
-// Function to compress a sample
+/**
+ * @brief Compresses the input sample.
+ *
+ * @param sample The input sample.
+ * @return float The compressed sample.
+ */
 float Reverb::CompressSample(float sample)
 {
     if (sample > 0.4)
@@ -74,7 +94,14 @@ float Reverb::CompressSample(float sample)
     return sample;
 }
 
-// Function to get reverb sample
+/**
+ * @brief Gets the next sample from the reverb effect.
+ *
+ * @param outl The left output sample.
+ * @param outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ */
 void Reverb::getSample(float &outl, float &outr, float inl, float inr)
 {
     float shimmer_l = 0.0f;
@@ -170,6 +197,18 @@ void Reverb::getSample(float &outl, float &outr, float inl, float inr)
            0.7f;
 }
 
+/**
+ * @brief Runs the reverb effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void Reverb::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     reverb_lowpass = this->mv.global_sample_rate * tone / 2.f;

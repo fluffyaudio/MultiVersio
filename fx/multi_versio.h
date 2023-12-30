@@ -45,5 +45,5 @@ public:
 private:
     void initialize_common(float sample_rate, float current_delay);
     void initialize_fx();
-    void UpdateKnobs();
+    void runActiveEffect();
 };

@@ -4,6 +4,11 @@
 #include "IMultiVersioCommon.h"
 #include "lofi.h"
 
+/**
+ * @brief Construct a new Lofi::Lofi object
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
 Lofi::Lofi(IMultiVersioCommon &mv) : mv(mv)
 {
     // Initialize member variables
@@ -28,6 +33,15 @@ Lofi::Lofi(IMultiVersioCommon &mv) : mv(mv)
     lofi_rate_par.Init(mv.versio.knobs[daisy::DaisyVersio::KNOB_1], mv.versio.AudioSampleRate() * 4, mv.versio.AudioSampleRate() / 16, lofi_rate_par.LOGARITHMIC);
 }
 
+/**
+ * Applies lo-fi processing to the input audio samples and generates the output samples.
+ * The lo-fi effect includes RMS calculation, envelope following, filtering, compression, saturation, and delay.
+ *
+ * @param outl The left channel output sample.
+ * @param outr The right channel output sample.
+ * @param inl The left channel input sample.
+ * @param inr The right channel input sample.
+ */
 void Lofi::getSample(float &outl, float &outr, float inl, float inr)
 {
     inl = inl * 0.8f;
@@ -162,6 +176,18 @@ void Lofi::getSample(float &outl, float &outr, float inl, float inr)
     IMultiVersioCommon::delr.Write(lofi_right);
 };
 
+/**
+ * Runs the lo-fi effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void Lofi::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
 

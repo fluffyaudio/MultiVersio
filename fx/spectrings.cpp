@@ -6,6 +6,15 @@
 #include "spectra.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Construct a new Spectrings::Spectrings object
+ *
+ * Initializes the string voices.
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ * @param spectra A reference to the Spectra object
+ * @param sample_rate The sample rate of the audio
+ */
 Spectrings::Spectrings(IMultiVersioCommon &mv, Spectra &spectra, int sample_rate) : mv(mv), spectra(spectra)
 {
     for (int i = 0; i < NUM_OF_STRINGS; i++)
@@ -21,6 +30,14 @@ Spectrings::Spectrings(IMultiVersioCommon &mv, Spectra &spectra, int sample_rate
     spectrings_drywet = 0.0f;
 }
 
+/**
+ * @brief Gets the next sample from the spectrings effect.
+ *
+ * @param outl The left output sample.
+ * @param outr The right output sample.
+ * @param inl The left input sample.
+ * @param inr The right input sample.
+ */
 void Spectrings::getSample(float &outl, float &outr, float inl, float inr)
 {
     spectra.spectra_oscbank.updateFreqAndMagn();
@@ -45,6 +62,18 @@ void Spectrings::getSample(float &outl, float &outr, float inl, float inr)
     outr = (sqrt(0.5f * (spectrings_drywet * 2.0f)) * spectrings_outr + sqrt(0.95f * (2.f - (spectrings_drywet * 2))) * inr) * 0.5f;
 }
 
+/**
+ * @brief Runs the spectrings effect.
+ *
+ * @param blend The dry/wet blend of the effect.
+ * @param regen The brightness of the effect.
+ * @param tone The octave of the effect.
+ * @param speed The reverb of the effect.
+ * @param size The damping of the effect.
+ * @param index The transpose of the effect.
+ * @param dense The inharmonicity of the effect.
+ * @param FSU
+ */
 void Spectrings::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     // blend = dry/wet

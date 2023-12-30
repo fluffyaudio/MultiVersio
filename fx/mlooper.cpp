@@ -1,11 +1,23 @@
 #include "mlooper.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Construct a new MLooper::MLooper object
+ *
+ * Resets the looper buffer.
+ *
+ * @param mv A reference to the IMultiVersioCommon interface
+ */
 MLooper::MLooper(IMultiVersioCommon &mv) : mv(mv)
 {
     ResetLooperBuffer();
 }
 
+/**
+ * @brief Resets the looper buffer.
+ *
+ * Initializes all looper settings and clears the looper buffer.
+ */
 void MLooper::ResetLooperBuffer()
 {
     // initialize all settings
@@ -28,6 +40,12 @@ void MLooper::ResetLooperBuffer()
     }
 }
 
+/**
+ * @brief Writes the input to the looper buffer.
+ *
+ * @param in_1l The left input sample.
+ * @param in_1r The right input sample.
+ */
 void MLooper::WriteLooperBuffer(float in_1l, float in_1r)
 {
     // writes the input to the buffer
@@ -52,6 +70,11 @@ void MLooper::WriteLooperBuffer(float in_1l, float in_1r)
     }
 };
 
+/**
+ * @brief Freezes the looper buffer.
+ *
+ * Inherits the settings from the normal buffer when freezing.
+ */
 void MLooper::FreezeLooperBuffer()
 {
     // inherits the settings from the normal buffer when freezing
@@ -59,6 +82,21 @@ void MLooper::FreezeLooperBuffer()
     mlooper_frozen_pos_1 = mlooper_pos_1;
     mlooper_frozen_pos_2 = mlooper_pos_2;
 };
+
+/**
+ * @brief Selects the looper division based on the given knob values.
+ *
+ * The looper division is determined as follows:
+ *
+ * - If the knob value is less than 0.2, the looper division is set to 1/1.
+ * - If the knob value is between 0.2 and 0.4, the looper division is set to 1/2.
+ * - If the knob value is between 0.4 and 0.6, the looper division is set to 1/4.
+ * - If the knob value is between 0.6 and 0.8, the looper division is set to 1/8.
+ * - If the knob value is greater than 0.8, the looper division is set to 1/16.
+ *
+ * @param knob_value_1 Left channel looper division knob value.
+ * @param knob_value_2 Right channel looper division knob value.
+ */
 void MLooper::SelectLooperDivision(float knob_value_1, float knob_value_2)
 {
     // sets the amount of repetitions
@@ -115,6 +153,20 @@ void MLooper::SelectLooperDivision(float knob_value_1, float knob_value_2)
     }
 };
 
+/**
+ * @brief Selects the looper play speed based on the given knob values.
+ *
+ * The looper play speed is determined as follows:
+ *
+ * - If the knob value is less than 0.2, the looper play speed is set to -2.
+ * - If the knob value is between 0.2 and 0.4, the looper play speed is set to -1.
+ * - If the knob value is between 0.4 and 0.6, the looper play speed is set to 0.
+ * - If the knob value is between 0.6 and 0.8, the looper play speed is set to 1.
+ * - If the knob value is greater than 0.8, the looper play speed is set to 2.
+ *
+ * @param knob_value_1 Left channel looper play speed knob value.
+ * @param knob_value_2 Right channel looper play speed knob value.
+ */
 void MLooper::SelectLooperPlaySpeed(float knob_value_1, float knob_value_2)
 {
     // sets the octave shift
@@ -181,6 +233,14 @@ void MLooper::SelectLooperPlaySpeed(float knob_value_1, float knob_value_2)
     }
 };
 
+/**
+ * @brief Gets the next sample from the looper effect.
+ *
+ * @param out1l The left output sample.
+ * @param out1r The right output sample.
+ * @param in1l The left input sample.
+ * @param in1r The right input sample.
+ */
 float MLooper::GetSampleFromBuffer(float buffer[], float pos)
 {
     // linear interpolation that gives back one sample in a certain position in the buffer
@@ -191,6 +251,16 @@ float MLooper::GetSampleFromBuffer(float buffer[], float pos)
     return a + (b - a) * pos_fractional;
 }
 
+/**
+ * @brief Applies looper processing to the input audio samples and generates the output samples.
+ *
+ * The looper effect includes RMS calculation, envelope following, filtering, compression, saturation, and delay.
+ *
+ * @param out1l The left output sample.
+ * @param out1r The right output sample.
+ * @param in1l The left input sample.
+ * @param in1r The right input sample.
+ */
 void MLooper::getSample(float &out1l, float &out1r, float in1l, float in1r)
 { // writing the incoming input into the buffer
     out1l = out1r = 0;
@@ -293,6 +363,18 @@ void MLooper::getSample(float &out1l, float &out1r, float in1l, float in1r)
     out1r = sqrt(0.5f * (mlooper_drywet * 2.0f)) * out1r + sqrt(0.95f * (2.f - (mlooper_drywet * 2))) * in1r;
 };
 
+/**
+ * @brief Runs the looper effect with the specified parameters.
+ *
+ * @param blend The blend parameter for the effect.
+ * @param regen The regen parameter for the effect.
+ * @param tone The tone parameter for the effect.
+ * @param speed The speed parameter for the effect.
+ * @param size The size parameter for the effect.
+ * @param index The index parameter for the effect.
+ * @param dense The dense parameter for the effect.
+ * @param FSU The FSU parameter for the effect.
+ */
 void MLooper::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
 {
     // blend = looper division left
