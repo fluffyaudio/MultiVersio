@@ -9,7 +9,7 @@
  *
  * @param mv A reference to the IMultiVersioCommon interface
  */
-s Filter::Filter(IMultiVersioCommon &mv) : mv(mv)
+Filter::Filter(IMultiVersioCommon &mv) : mv(mv)
 {
     filter_cutoff_l_par.Init(this->mv.versio.knobs[daisy::DaisyVersio::KNOB_0], 60, 20000, filter_cutoff_l_par.LOGARITHMIC);
     filter_cutoff_r_par.Init(this->mv.versio.knobs[daisy::DaisyVersio::KNOB_4], 60, 20000, filter_cutoff_r_par.LOGARITHMIC);
