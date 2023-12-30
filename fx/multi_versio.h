@@ -22,6 +22,9 @@
 #include "IMultiVersioCommon.h"
 #include "IEffect.h"
 
+/**
+ * @brief Main class for the MultiVersio effects firmware.
+ */
 class MultiVersio : public IMultiVersioCommon
 {
 public:

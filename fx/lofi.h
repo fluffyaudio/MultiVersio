@@ -7,6 +7,9 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Implements a lofi effect.
+ */
 class Lofi : public IEffect
 {
 public:

@@ -7,6 +7,9 @@
 
 #define NUM_OF_STRINGS 2
 
+/**
+ * @brief Implements the Spectrings effect.
+ */
 class Spectrings : public IEffect
 {
 public:

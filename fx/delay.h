@@ -8,6 +8,9 @@
 #define NUM_DELAY_TIMES 17
 #define MAX_DELAY static_cast<size_t>(48000 * 2.5f) // 2.5 seconds max delay in the fast ram
 
+/**
+ * @brief Implements a delay effect.
+ */
 class DelayEffect : public IEffect
 {
 public:

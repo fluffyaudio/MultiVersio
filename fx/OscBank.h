@@ -8,6 +8,9 @@
 
 typedef stmlib::ShyFFT<float, FFT_LENGTH, stmlib::RotationPhasor> FFT;
 
+/**
+ * @brief Oscillator bank used by the Spectra effect.
+ */
 class OscBank
 {
 public:

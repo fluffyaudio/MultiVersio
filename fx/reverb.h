@@ -6,6 +6,9 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Implements a reverb effect.  This is also used by a few other effects.
+ */
 class Reverb : public IEffect
 {
 public:

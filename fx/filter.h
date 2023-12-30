@@ -4,6 +4,9 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Implements a filter effect.
+ */
 class Filter : public IEffect
 {
 public:

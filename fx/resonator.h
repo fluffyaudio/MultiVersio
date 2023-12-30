@@ -3,6 +3,9 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Implements a resonator effect.
+ */
 class Resonator : public IEffect
 {
 public:

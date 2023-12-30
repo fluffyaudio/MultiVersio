@@ -6,6 +6,9 @@
 #include "IEffect.h"
 #include "IMultiVersioCommon.h"
 
+/**
+ * @brief Implements a looper effect.
+ */
 class MLooper : public IEffect
 {
 public:
