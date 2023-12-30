@@ -1,0 +1,7 @@
+{
+    "env": {
+      "myIncludePath": ["${workspaceFolder}/stmlib/fft", "${workspaceFolder}/stmlib/dsp", "${workspaceFolder}/libdaisy/src/", "${workspaceFolder}/DaisySP/Source"]
+    },
+    "configurations": [],
+    "version": 4
+}
