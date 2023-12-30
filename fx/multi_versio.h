@@ -40,7 +40,10 @@ public:
 
     void run();
     int getMode();
-    void Controls();
+    void processControls();
+    void processAudio(daisy::AudioHandle::InputBuffer in,
+                      daisy::AudioHandle::OutputBuffer out,
+                      size_t size);
     static void AudioCallback(daisy::AudioHandle::InputBuffer in,
                               daisy::AudioHandle::OutputBuffer out,
                               size_t size);
@@ -48,5 +51,5 @@ public:
 private:
     void initialize_common(float sample_rate, float current_delay);
     void initialize_fx();
-    void runActiveEffect();
+    void updateActiveEffect();
 };

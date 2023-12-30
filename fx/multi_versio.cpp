@@ -52,13 +52,9 @@ MultiVersio::MultiVersio() : IMultiVersioCommon(versio), leds(versio)
 }
 
 /**
- * @brief Audio callback.
+ * @brief Processes audio.
  *
- * This is the audio callback function. It is called by the DaisyVersio
- * hardware to process audio.
- *
- * This function is responsible for calling the audio processing functions
- * of the effects.
+ * This function processes audio. It is called by the audio callback.
  *
  * @param in The input buffer.
  * @param out The output buffer.
@@ -66,22 +62,19 @@ MultiVersio::MultiVersio() : IMultiVersioCommon(versio), leds(versio)
  *
  * @return void
  */
-void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
-                                daisy::AudioHandle::OutputBuffer out,
-                                size_t size)
+void MultiVersio::processAudio(daisy::AudioHandle::InputBuffer in,
+                               daisy::AudioHandle::OutputBuffer out,
+                               size_t size)
 {
     float out1, out2, in1, in2;
 
-    instance->Controls();
-    instance->leds.UpdateLeds();
-
-    IEffect *effect = instance->effects[instance->mode];
+    IEffect *effect = effects[mode];
 
     // run pre-processing on the current effect
     // NOTE: the default preProcess implementation does nothing
     effect->preProcess(in[0], in[1], size);
 
-    // audio
+    // process samples
     for (size_t i = 0; i < size; i += 1)
     {
         in1 = in[0][i];
@@ -96,7 +89,7 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
         // apply reverb for those effects that use it
         if (effect->usesReverb())
         {
-            instance->effects[REV]->processSample(out1, out2, out1, out2);
+            effects[REV]->processSample(out1, out2, out1, out2);
         }
 
         out[0][i] = out1;
@@ -105,6 +98,37 @@ void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
 
     // runs postprocessing. This is a noop for all effects apart from the filter.
     effect->postProcess(out[0], out[1], in[0], in[1], size);
+}
+
+/**
+ * @brief Audio callback.
+ *
+ * This is the audio callback function. It is called by the DaisyVersio
+ * hardware to process audio.
+ *
+ * This function is responsible for calling the audio processing functions
+ * of the effects.
+ *
+ * Calls the following functions:
+ * - MultiVersio::processControls()
+ * - MultiVersio::updateActiveEffect()
+ * - MultiVersio::processAudio()
+ * - LedsControl::UpdateLeds()
+ *
+ * @param in The input buffer.
+ * @param out The output buffer.
+ * @param size The size of the buffer.
+ *
+ * @return void
+ */
+void MultiVersio::AudioCallback(daisy::AudioHandle::InputBuffer in,
+                                daisy::AudioHandle::OutputBuffer out,
+                                size_t size)
+{
+    instance->processControls();
+    instance->updateActiveEffect();
+    instance->processAudio(in, out, size);
+    instance->leds.UpdateLeds();
 };
 
 /**
@@ -245,7 +269,7 @@ int MultiVersio::getMode()
  *
  * @return void
  */
-void MultiVersio::runActiveEffect()
+void MultiVersio::updateActiveEffect()
 {
     float blend = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_0);
     float speed = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_1);
@@ -260,7 +284,7 @@ void MultiVersio::runActiveEffect()
     effects[mode]->run(blend, regen, tone, speed, size, index, dense, 0); // TODO: FSU
 }
 
-void MultiVersio::Controls()
+void MultiVersio::processControls()
 {
     // TODO why are these variables set here?
     Resonator *resonator = (Resonator *)effects[RESONATOR];
@@ -273,8 +297,6 @@ void MultiVersio::Controls()
     // this->versio.ProcessDigitalControls();
 
     this->versio.tap.Debounce();
-
-    this->runActiveEffect();
 
     // UpdateEncoder();
 }
