@@ -122,7 +122,7 @@ void Resonator::processSample(float &outl, float &outr, float inl, float inr)
 
     float rev_outl, rev_outr;
     this->mv.effects[REV]->processSample(rev_outl, rev_outr, (inl * 0.01 + resonator_previous_l * 0.7f) * resonator_drywet + (inl * 0.999 + resonator_previous_l * 0.001f) * (1 - resonator_drywet),
-                                     (inr * 0.01 + resonator_previous_r * 0.7f) * resonator_drywet + (inr * 0.999 + resonator_previous_r * 0.001f) * (1 - resonator_drywet));
+                                         (inr * 0.01 + resonator_previous_r * 0.7f) * resonator_drywet + (inr * 0.999 + resonator_previous_r * 0.001f) * (1 - resonator_drywet));
 
     resonator_averager.Add((resonator_outl * resonator_outl + resonator_outr * resonator_outr) / 2);
 
@@ -151,9 +151,9 @@ void Resonator::processSample(float &outl, float &outr, float inl, float inr)
  * @param size The size parameter for the effect.
  * @param index The index parameter for the effect.
  * @param dense The dense parameter for the effect.
- * @param FSU The FSU parameter for the effect.
+ * @param gate Effect gate from the FSU input.
  */
-void Resonator::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void Resonator::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
     if (this->mv.versio.tap.RisingEdge())
     {

@@ -72,9 +72,9 @@ void Spectrings::processSample(float &outl, float &outr, float inl, float inr)
  * @param size The damping of the effect.
  * @param index The transpose of the effect.
  * @param dense The inharmonicity of the effect.
- * @param FSU
+ * @param gate Effect gate from the FSU input.
  */
-void Spectrings::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void Spectrings::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
     // blend = dry/wet
     // speed =  reverb
@@ -83,7 +83,7 @@ void Spectrings::run(float blend, float regen, float tone, float speed, float si
     // size = damping
     // regen = brightness
     // dense = inharmonicity
-    // FSU
+    // gate = effect gate from gate input
 
     // tap = activate quantizer
 
@@ -168,7 +168,7 @@ void Spectrings::run(float blend, float regen, float tone, float speed, float si
         spectrings_trigger_next_cycle = false;
     }
 
-    if (this->mv.versio.gate.Trig())
+    if (gate)
     {
         spectra.spectra_do_analysis = true;
         spectrings_current_voice = (spectrings_current_voice + 1) % spectrings_active_voices;

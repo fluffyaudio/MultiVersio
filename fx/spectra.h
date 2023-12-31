@@ -25,7 +25,7 @@ private:
 
 public:
     Spectra(IMultiVersioCommon &mv);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
     void SelectSpectraOctave(float knob_value_1);
     void SelectSpectraQuality(float knob_value_1);
     void processSample(float &outl, float &outr, float inl, float inr);

@@ -186,9 +186,9 @@ void Lofi::processSample(float &outl, float &outr, float inl, float inr)
  * @param size The size parameter for the effect.
  * @param index The index parameter for the effect.
  * @param dense The dense parameter for the effect.
- * @param FSU The FSU parameter for the effect.
+ * @param gate Effect gate from the FSU input.
  */
-void Lofi::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void Lofi::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
 
     // blend = lofi drywet

@@ -127,9 +127,9 @@ void Spectra::processSample(float &outl, float &outr, float inl, float inr)
  * @param size The size parameter for the effect.
  * @param index The index parameter for the effect.
  * @param dense The dense parameter for the effect.
- * @param FSU The FSU parameter for the effect.
+ * @param gate Effect gate from the FSU input.
  */
-void Spectra::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void Spectra::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
     // blend = spectra drywet
     // speed = hop
@@ -138,9 +138,7 @@ void Spectra::run(float blend, float regen, float tone, float speed, float size,
     // size = number of waveforms + spread
     // regen = amount of reverb + feedback
     // dense = waveform kind
-    // tap = activate quantizer
-
-    // FSU clock
+    // gate = clock / FSU
 
     SelectSpectraQuality(1.f - speed);
 
@@ -156,7 +154,7 @@ void Spectra::run(float blend, float regen, float tone, float speed, float size,
     SelectSpectraOctave(tone);
 
     spectra_rotate_harmonics = 0;
-    if (this->mv.versio.gate.Trig())
+    if (gate)
     {
         spectra_do_analysis = true;
         spectra_r = randomFloat();

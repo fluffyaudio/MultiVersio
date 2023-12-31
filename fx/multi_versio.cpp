@@ -263,9 +263,22 @@ int MultiVersio::getMode()
  * This function gets the value of all knobs, gets the current mode,
  * and runs the active effect.
  *
+ * Naming of the knobs is derived from the
+ * [Desmodus Versio](https://noiseengineering.us/products/desmodus-versio)
+ * module, as follows:
+ *
+ * - Knob 0: Blend
+ * - Knob 1: Speed
+ * - Knob 2: Tone
+ * - Knob 3: Index
+ * - Knob 4: Regen
+ * - Knob 5: Size
+ * - Knob 6: Dense
+ *
+ * In addition, the value of the gate FSU input is required by some effects.
+ *
  * @see MultiVersio::getMode()
  * @see MultiVersio::effects
- * @todo Wire in the value of FSU, which is required by some effects.
  *
  * @return void
  */
@@ -278,10 +291,11 @@ void MultiVersio::updateActiveEffect()
     float regen = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_4);
     float size = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_5);
     float dense = this->versio.GetKnobValue(daisy::DaisyVersio::KNOB_6);
+    bool gate = this->versio.Gate();
 
     mode = this->getMode();
 
-    effects[mode]->run(blend, regen, tone, speed, size, index, dense, 0); // TODO: FSU
+    effects[mode]->run(blend, regen, tone, speed, size, index, dense, gate);
 }
 
 void MultiVersio::processControls()

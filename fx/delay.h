@@ -53,7 +53,7 @@ public:
 
     DelayEffect(IMultiVersioCommon &mv);
     void SelectDelayDivision(float knob1, float knob2);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
     void processSample(float &outl, float &outr, float inl, float inr);
     bool usesReverb();
 

@@ -16,7 +16,7 @@ public:
     Lofi(IMultiVersioCommon &mv);
 
     void processSample(float &outl, float &outr, float inl, float inr);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
     bool usesReverb();
 
 private:

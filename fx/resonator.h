@@ -10,7 +10,7 @@ class Resonator : public IEffect
 {
 public:
     Resonator(IMultiVersioCommon &mv);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
     void processSample(float &outl, float &outr, float inl, float inr);
     void SelectResonatorOctave(float speed);
     bool usesReverb();

@@ -63,9 +63,9 @@ void DelayEffect::processSample(float &outl, float &outr, float inl, float inr){
  * @param size The value of the size knob.
  * @param index The value of the index knob.
  * @param dense The value of the dense knob.
- * @param FSU The value of the FSU knob.
+ * @param gate Effect gate from the FSU input.
  */
-void DelayEffect::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU){
+void DelayEffect::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate){
     // TODO
 };
 

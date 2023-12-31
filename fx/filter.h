@@ -22,7 +22,7 @@ public:
 
     void processSample(float &outl, float &outr, float inl, float inr);
     void postProcess(float outl[], float outr[], const float inl[], const float inr[], size_t size);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
 
 private:
     daisy::Parameter filter_cutoff_l_par;

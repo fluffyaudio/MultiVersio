@@ -57,6 +57,6 @@ public:
     void SelectLooperPlaySpeed(float knob_value_1, float knob_value_2);
     float GetSampleFromBuffer(float buffer[], float pos);
     void processSample(float &out1l, float &out1r, float in1l, float in1r);
-    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU);
+    void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate);
     bool usesReverb();
 };

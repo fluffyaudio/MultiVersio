@@ -19,9 +19,9 @@ public:
      * @param size The size parameter.
      * @param index The index parameter.
      * @param dense The dense parameter.
-     * @param FSU The FSU parameter.
+     * @param gate Effect gate from the FSU input.
      */
-    virtual void run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU) = 0;
+    virtual void run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate) = 0;
 
     /**
      * @brief Processes the input audio samples and produces the output samples.

@@ -373,9 +373,9 @@ void MLooper::processSample(float &out1l, float &out1r, float in1l, float in1r)
  * @param size The size parameter for the effect.
  * @param index The index parameter for the effect.
  * @param dense The dense parameter for the effect.
- * @param FSU The FSU parameter for the effect.
+ * @param gate Effect gate from the FSU input.
  */
-void MLooper::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void MLooper::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
     // blend = looper division left
     // tone =
@@ -384,13 +384,13 @@ void MLooper::run(float blend, float regen, float tone, float speed, float size,
     // regen = looper division right
     // size = looper octave right
     // dense = dry/wet
-    // FSU = clock
+    // gate = FSU / clock
 
     // TONE = Amount of the two micro loopers
     // INDEX = AMOUNT OF RANDOM
     // DENSE = DRY WET //implement
 
-    if (this->mv.versio.gate.Trig())
+    if (gate)
     {
         mlooper_len = mlooper_len_count % LOOPER_MAX_SIZE;
         mlooper_len_count = 0;

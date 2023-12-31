@@ -59,9 +59,9 @@ void Filter::postProcess(float outl[], float outr[], const float inl[], const fl
  * @param size The size parameter for the effect.
  * @param index The index parameter for the effect.
  * @param dense The dense parameter for the effect.
- * @param FSU The FSU parameter for the effect.
+ * @param gate Effect gate from the FSU input.
  */
-void Filter::run(float blend, float regen, float tone, float speed, float size, float index, float dense, int FSU)
+void Filter::run(float blend, float regen, float tone, float speed, float size, float index, float dense, bool gate)
 {
     // Calculate filter frequencies
     filter_target_l_freq = filter_cutoff_l_par.Process() / this->mv.global_sample_rate;
