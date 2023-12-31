@@ -21,12 +21,12 @@
  */
 #pragma once
 
-#include "daisysp.h"
+#include "DaisySP/Source/daisysp.h"
+#include "libDaisy/src/daisy_versio.h"
 #include "helpers.h"
-#include <daisy_versio.h>
 #include "leds.h"
 #include "stmlib/dsp/filter.h"
-#include "IEffect.h"
+#include "fx/IEffect.h"
 
 /**
  * @class IMultiVersioCommon

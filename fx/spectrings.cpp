@@ -1,10 +1,10 @@
 
-#include "../core/helpers.h"
-#include <daisy_versio.h>
-#include "../core/leds.h"
+#include "core/helpers.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "core/leds.h"
 #include "spectrings.h"
 #include "spectra.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Construct a new Spectrings::Spectrings object

@@ -1,4 +1,4 @@
-#include <daisy_versio.h>
+#include "libDaisy/src/daisy_versio.h"
 #include "IMultiVersioCommon.h"
 #include "spectra.h"
 #include "OscBank.h"

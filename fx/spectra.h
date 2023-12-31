@@ -3,7 +3,7 @@
 #include "IEffect.h"
 #include "OscBank.h"
 #include "ISpectra.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 const bool scale_12[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 const bool scale_7[12] = {1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1};

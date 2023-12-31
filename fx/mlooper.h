@@ -1,10 +1,10 @@
 #pragma once
-#include "daisy_patch.h"
-#include "daisysp.h"
 
+#include "libDaisy/src/daisy_patch.h"
+#include "DaisySP/Source/daisysp.h"
 #include <string>
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Implements a looper effect.

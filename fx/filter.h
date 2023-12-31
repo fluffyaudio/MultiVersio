@@ -1,8 +1,8 @@
 #pragma once
 
-#include <daisy_versio.h>
+#include "libDaisy/src/daisy_versio.h"
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Implements a filter effect.

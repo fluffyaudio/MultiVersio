@@ -1,8 +1,8 @@
-#include "../core/helpers.h"
-#include "daisy_versio.h"
-#include "daisysp.h"
-#include "IMultiVersioCommon.h"
-#include "lofi.h"
+#include "core/helpers.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "DaisySP/Source/daisysp.h"
+#include "core/IMultiVersioCommon.h"
+#include "fx/lofi.h"
 
 /**
  * @brief Construct a new Lofi::Lofi object

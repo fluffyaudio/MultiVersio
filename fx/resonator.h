@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Implements a resonator effect.

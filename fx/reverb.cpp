@@ -1,9 +1,9 @@
-#include "../core/helpers.h"
-#include <daisy_versio.h>
+#include "core/helpers.h"
+#include "libDaisy/src/daisy_versio.h"
 #include "IMultiVersioCommon.h"
 #include "reverb.h"
-#include "mode.h"
-#include "daisysp.h"
+#include "core/mode.h"
+#include "DaisySP/Source/daisysp.h"
 
 /**
  * @brief Construct a new Reverb::Reverb object

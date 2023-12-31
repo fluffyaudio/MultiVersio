@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../core/helpers.h"
-#include <daisy_versio.h>
+#include "core/helpers.h"
+#include "libDaisy/src/daisy_versio.h"
 #include "mlooper.h"
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Implements a reverb effect.  This is also used by a few other effects.

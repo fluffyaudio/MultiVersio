@@ -1,10 +1,10 @@
 #pragma once
 
-#include "daisy_versio.h"
-#include "daisysp.h"
-#include "IMultiVersioCommon.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "DaisySP/Source/daisysp.h"
+#include "core/IMultiVersioCommon.h"
 #include "ISpectra.h"
-#include "shy_fft.h"
+#include "stmlib/fft/shy_fft.h"
 
 typedef stmlib::ShyFFT<float, FFT_LENGTH, stmlib::RotationPhasor> FFT;
 

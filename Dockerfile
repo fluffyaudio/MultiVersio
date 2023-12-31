@@ -19,25 +19,3 @@ RUN apk --update --no-cache add \
     doxygen
 
 WORKDIR /workspaces
-
-# Clone the libDaisy repository
-RUN git clone --recursive https://github.com/electro-smith/libDaisy.git libdaisy
-
-# Set the working directory to the libDaisy folder
-WORKDIR /workspaces/libdaisy
-
-# Build libDaisy
-RUN make
-
-WORKDIR /workspaces
-
-# Clone the DaisySP repository
-RUN git clone --recursive https://github.com/electro-smith/DaisySP.git
-
-WORKDIR /workspaces/DaisySP
-
-RUN make
-
-WORKDIR /workspaces
-
-RUN git clone --recursive https://github.com/pichenettes/stmlib.git

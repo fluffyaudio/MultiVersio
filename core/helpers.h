@@ -1,7 +1,6 @@
 #pragma once
 
-#include <stdbool.h>
-#include <stddef.h>
+#include <cstddef>
 
 #define RMS_SIZE 48
 #define FFT_LENGTH 1024

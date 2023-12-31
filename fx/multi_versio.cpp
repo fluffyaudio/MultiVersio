@@ -4,15 +4,15 @@
  *
  * This file contains the implementation of the MultiVersio class, which is responsible for initializing and running the audio effects on the DaisyVersio hardware.
  */
-#include <daisy_versio.h>
-#include "leds.h"
-#include "daisysp.h"
-#include "string"
-#include "arm_math.h"
-#include "shy_fft.h"
-#include <stddef.h>
+#include "libDaisy/src/daisy_versio.h"
+#include "core/leds.h"
+#include "DaisySP/Source/daisysp.h"
+#include <string>
+#include "libDaisy/Drivers/CMSIS/DSP/Include/arm_math.h"
+#include "stmlib/fft/shy_fft.h"
+#include <cstddef>
 
-#include "mode.h"
+#include "core/mode.h"
 
 #include "multi_versio.h"
 
@@ -24,7 +24,7 @@
 #include "reverb.h"
 #include "spectrings.h"
 #include "spectra.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 daisysp::DelayLine<float, MAX_DELAY> DSY_SDRAM_BSS IMultiVersioCommon::dell;
 daisysp::DelayLine<float, MAX_DELAY> DSY_SDRAM_BSS IMultiVersioCommon::delr;

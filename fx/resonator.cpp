@@ -4,10 +4,10 @@
  * The Resonator class is responsible for generating resonator effects based on the input audio signals.
  * It provides methods for selecting the resonator octave, processing audio samples, and adjusting parameters.
  */
-#include "../core/helpers.h"
+#include "core/helpers.h"
 #include "resonator.h"
-#include "IMultiVersioCommon.h"
-#include "mode.h"
+#include "core/IMultiVersioCommon.h"
+#include "core/mode.h"
 
 /**
  * @brief Construct a new Resonator::Resonator object

@@ -6,8 +6,8 @@
  * It provides methods for initializing the oscillators, setting their frequency and amplitude,
  * selecting waveforms, processing the oscillators, and performing spectral analysis.
  */
-#include "daisy_versio.h"
-#include "daisysp.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "DaisySP/Source/daisysp.h"
 #include "IMultiVersioCommon.h"
 #include "ISpectra.h"
 #include "OscBank.h"

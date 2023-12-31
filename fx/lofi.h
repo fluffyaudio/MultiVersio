@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../core/helpers.h"
-#include <daisy_versio.h>
-#include "shy_fft.h"
+#include "core/helpers.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "stmlib/fft/shy_fft.h"
 #include "filter.h"
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 /**
  * @brief Implements a lofi effect.

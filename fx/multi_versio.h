@@ -1,16 +1,14 @@
 #pragma once
 
-#include <daisy_versio.h>
-#include "../core/leds.h"
-#include "daisysp.h"
-#include "daisy_versio.h"
-#include "string"
-#include "arm_math.h"
-#include "shy_fft.h"
-#include <stddef.h>
-
-#include "../core/mode.h"
-
+#include "libDaisy/src/daisy_versio.h"
+#include "core/leds.h"
+#include "DaisySP/Source/daisysp.h"
+#include "libDaisy/src/daisy_versio.h"
+#include <string>
+#include "libDaisy/Drivers/CMSIS/DSP/Include/arm_math.h"
+#include "stmlib/fft/shy_fft.h"
+#include <cstddef>
+#include "core/mode.h"
 #include "delay.h"
 #include "filter.h"
 #include "lofi.h"
@@ -19,7 +17,7 @@
 #include "reverb.h"
 #include "spectrings.h"
 #include "spectra.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 #include "IEffect.h"
 
 /**

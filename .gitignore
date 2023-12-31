@@ -2,3 +2,19 @@
 
 build/
 docs/
+
+# Editors
+## Visual Studio Code
+.vscode/
+
+## Intellij
+.idea/
+
+## Vim
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~

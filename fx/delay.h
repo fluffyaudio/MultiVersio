@@ -1,9 +1,9 @@
 #pragma once
 
-#include <daisy_versio.h>
-#include "helpers.h"
+#include "libDaisy/src/daisy_versio.h"
+#include "core/helpers.h"
 #include "IEffect.h"
-#include "IMultiVersioCommon.h"
+#include "core/IMultiVersioCommon.h"
 
 #define NUM_DELAY_TIMES 17
 #define MAX_DELAY static_cast<size_t>(48000 * 2.5f) // 2.5 seconds max delay in the fast ram

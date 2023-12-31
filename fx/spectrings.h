@@ -1,8 +1,8 @@
 #pragma once
 
 #include "IEffect.h"
-#include "daisysp.h"
-#include "IMultiVersioCommon.h"
+#include "DaisySP/Source/daisysp.h"
+#include "core/IMultiVersioCommon.h"
 #include "spectra.h"
 
 #define NUM_OF_STRINGS 2
