@@ -12,7 +12,7 @@ jobs:
           docker build -t multi_versio_build .
       - name: Run Make
         run: |
-          docker run -v "${{ github.workspace }}:/workspaces/MultiVersio" multi_versio_build make -C /workspaces/MultiVersio
+          docker run -u $(id -u):$(id -g) -v "${{ github.workspace }}:/workspaces/MultiVersio" multi_versio_build make -C /workspaces/MultiVersio
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
