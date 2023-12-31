@@ -16,6 +16,8 @@ RUN apk --update --no-cache add \
     gcc-arm-none-eabi \
     newlib-arm-none-eabi \
     g++-arm-none-eabi \
-    doxygen
+    doxygen \
+    clang-extra-tools \
+    python3
 
 WORKDIR /workspaces
